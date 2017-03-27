@@ -1,3 +1,5 @@
+// Gestionar los detalles de un juego
+// Se modelan ciertos musicos que que interactuarán posteriormente con los personajes creados por los usuarios.
 object jimiHendrix {
 	var canto=70
 	var guitarra=90
