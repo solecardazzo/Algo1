@@ -9,44 +9,43 @@ object jimiHendrix {
 	var composicion=80
 	var carisma=60
 	var descontrol=0
-	var contadorAuxiliar=1
 	var maximaHabilidad=100
+	var minimaHabilidad=0
+	var maximoDescontrol=10
+ 	var umbralDeCorte=5
 	
 	method tocaConOtroMusico(unMusico){
-		return (canto==0 && self.valorMayor(unMusico.darValorCanto(),canto)) || (guitarra==0 && self.valorMayor(unMusico.darValorGuitarra(),guitarra)) || (bateria==0 && self.valorMayor(unMusico.darValorBateria(),bateria)) || (bajo==0 && self.valorMayor(unMusico.darValorBajo(),bajo)) || (piano==0 && self.valorMayor(unMusico.darValorPiano(),piano)) || (composicion==0 && self.valorMayor(unMusico.darValorComposicion(),composicion)) || (carisma==0 && self.valorMayor(unMusico.darValorCarisma(),carisma))
+		return (self.darValorCanto()==0 && self.valorMayor(unMusico.darValorCanto(),self.darValorCanto()))
+		or (self.darValorGuitarra()==0 && self.valorMayor(unMusico.darValorGuitarra(),self.darValorGuitarra()))
+		or (self.darValorBateria()==0 && self.valorMayor(unMusico.darValorBateria(),self.darValorBateria())) 
+		or (self.darValorBajo()==0 && self.valorMayor(unMusico.darValorBajo(),self.darValorBajo())) 
+		or (self.darValorPiano()==0 && self.valorMayor(unMusico.darValorPiano(),self.darValorPiano())) 
+		or (self.darValorComposicion()==0 && self.valorMayor(unMusico.darValorComposicion(),self.darValorComposicion()))
+		or (self.darValorCarisma()==0 && self.valorMayor(unMusico.darValorCarisma(),self.darValorCarisma()))
+		or self.darValorDescontrol()==10
 	}
 	method valorMayor(valor1,valor2){
 		return valor1>valor2
 	}
+	method valorMenor(valor1,valor2){
+		return valor1<valor2
+	}
 	method valorMayorIgual(valor1,valor2){
 		return valor1>=valor2
 	}
- 	method descontrol(){
- 		var maximoDescontrol=10
- 		var umbralDeCorte=5
- 		
- 		descontrol ++
-		if (self.valorMayorIgual(descontrol,maximoDescontrol)){
-			canto=0
-			guitarra=0
-			bateria=0
-			bajo=0
-			piano=0			
-			composicion=0
-			carisma=0
-		} 
-		if (self.valorMayorIgual(descontrol,umbralDeCorte)){
-			self.cambiarCanto(canto+(contadorAuxiliar*umbralDeCorte))
-			self.cambiarGuitarra(guitarra+(contadorAuxiliar*umbralDeCorte))
-			self.cambiarBateria(bateria+(contadorAuxiliar*umbralDeCorte))
-			self.cambiarBajo(bajo+(contadorAuxiliar*umbralDeCorte))
-			self.cambiarPiano(piano+(contadorAuxiliar*umbralDeCorte))
-			self.cambiarComposicion(composicion+(contadorAuxiliar*umbralDeCorte))
-			self.cambiarCarisma(carisma+(contadorAuxiliar*umbralDeCorte))
-			contadorAuxiliar++
-		}
-		 		return descontrol
+ 	method descontrol(){	
+ 		if (descontrol<=maximoDescontrol)	
+ 		descontrol=descontrol+1
 	}
+	method gestionarDescontrol(unaHabilidad){
+		if (self.valorMayorIgual(descontrol,maximoDescontrol))
+		return self.cambiarCanto(0)
+		else if (self.valorMayorIgual(descontrol,umbralDeCorte) && self.valorMenor(descontrol,maximoDescontrol))
+		return self.cambiarCanto(unaHabilidad+(descontrol-4)*umbralDeCorte)
+		else
+		return unaHabilidad
+	}
+	
 	method cambiarCanto(unValor){
 		canto=unValor
 		if (self.valorMayorIgual(canto,maximaHabilidad)) canto=maximaHabilidad
@@ -76,7 +75,12 @@ object jimiHendrix {
 		if (self.valorMayorIgual(carisma,maximaHabilidad)) carisma=maximaHabilidad
 	}
 	method darValorCanto(){
-		return canto 
+		if (self.valorMayorIgual(descontrol,maximoDescontrol))
+		return canto=0
+		else if (self.valorMayorIgual(descontrol,umbralDeCorte) && self.valorMenor(descontrol,maximoDescontrol))
+		return self.cambiarCanto(canto+(descontrol-4)*umbralDeCorte)
+		else
+		return canto	 
 	}
 	method darValorGuitarra(){
 		return guitarra 
