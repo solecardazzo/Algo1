@@ -1,30 +1,39 @@
 // Ejercicio dado por Lucas de Los Simpsons
 
 object plantaNuclear {
-    var empleado = [homero, patoBalancin, barney]
+    //var empleado = [homero, patoBalancin, barney]
+    var empleado=[]  
         
     method nuevoEmpleado(nuevoEmpleado){
         empleado.add(nuevoEmpleado)
-        //empleado = nuevoEmpleado
     }
     method despedirEmpleado(empleadoDespedido){
     	empleado.remove(empleadoDespedido)
     }
     method enPeligro(){
-        return (deposito.muchasBarras() && empleado.last().estaDistraido())  || mrsBurns.esPobre()
+        return (deposito.muchasBarras() && self.todosDistraidos())  || mrsBurns.esPobre()
+    }
+    method todosDistraidos(){
+    	return empleado.all({emple=>emple.estaDistraido()}) 
     }
     method pagarSueldos(){
-        empleado.cobrarSueldo()
+    	empleado.forEach({emp=>emp.cobrarSueldo()})
         mrsBurns.cobrarSueldo()
     }
     method estaAbandonada(){
     	return empleado.isEmpty()
     }
     method funcionaBien(){
-    	return empleado.size() > deposito.cantBarras()
+    	return self.totalDonas() > deposito.cantBarras()
     }
     method hayConflictoDeInteres(){
     	return empleado.contains(mrsBurns)
+    }
+    method comeDonas(){
+    	return empleado.max({emp=>emp.cuantasDonas()})
+    }
+    method totalDonas(){
+    	return  empleado.sum({e=>e.cuantasDonas()})
     }
 }
 
@@ -45,7 +54,7 @@ object patoBalancin{
     method estaDistraido(){
         return false
     }
-    method cobraSueldor(){
+    method cobrarSueldo(){
         //no hace nada 
     }
     
@@ -68,6 +77,9 @@ object homero{
     method estaDistraido(){
         return  donas < 2
     }
+    method cuantasDonas(){
+    	return donas
+    }
 }
 object barney{
     var estadoEtilico = sobrio
@@ -84,6 +96,12 @@ object barney{
     }
     method estaAlegre(){
         return radio.tema() == temaFavorito
+    }
+    method cobrarSueldo(){
+        //no hace nada 
+    }
+    method cuantasDonas(){
+    	return 0
     }
 }
 
@@ -116,10 +134,14 @@ object mrsBurns{
     method cobrarSueldo(){
         rico = true
     }
+    method cuantasDonas(){
+    	return 0
+    }
 }
 
 object carl{
 	var donasPorDia=[]
+	var maxDonas=5
 	
 	method donasDelDia(cantComidas){
 		donasPorDia.add(cantComidas)
@@ -128,6 +150,12 @@ object carl{
 		return donasPorDia.get(unDiaDelMes)
 	}
 	method estaDistraido(){
-		return donasPorDia.last()>5 and donasPorDia.max()!=donasPorDia.last()
+		return donasPorDia.sum()>maxDonas and donasPorDia.max()!=donasPorDia.last()
 	}
+	method cobrarSueldo(){
+        //no hace nada 
+    }
+    method cuantasDonas(){
+    	return donasPorDia.last()
+    }
 }
