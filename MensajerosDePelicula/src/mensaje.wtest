@@ -1,0 +1,37 @@
+import destinos.*
+import mensajeros.*
+import paquete.*
+import transportes.*
+
+test "Comprobar el peso del camion"{
+	camion.setCantidadDeAcoplados(2)
+	assert.equals(camion.peso(),2*500)
+}
+test "Comprobar el peso de Roberto + su transporte"{
+	roberto.setTransporte(bicicleta)
+	assert.equals(roberto.pesoTotal(),0+90)
+}
+test "Comprobar si puente de Brooklin deja pasar al mensajero cuando su peso es menor que 1000"{
+	assert.that(puenteDeBrooklin.puedeSerAccedidoPor(neo))
+}
+test "Comprobar si puente de Brooklin no deja pasar al mensajero cuando su peso es mayor que 1000"{
+	camion.setCantidadDeAcoplados(2)
+	roberto.setTransporte(camion)	
+	assert.notThat(puenteDeBrooklin.puedeSerAccedidoPor(roberto))
+}
+test "Comprobar si matrix deja pasar al mensajero cuando puede hacer una llamada"{
+	assert.that(matrix.puedeSerAccedidoPor(chuck))
+}
+test "Comprobar si matrix no deja pasar al mensajero cuando no puede hacer una llamada"{
+	assert.notThat(matrix.puedeSerAccedidoPor(neo))
+}
+test "Roberto puede llevar un paquete que esta pago en un camion que tiene un acoplado"{
+	camion.setCantidadDeAcoplados(1)
+	roberto.setTransporte(camion)
+	paquete.setEstaPago(true)
+	assert.that(paquete.puedeSerEntregado(roberto,puenteDeBrooklin))
+}
+test "Neo con credito no puede llevar un paquete que no esta pago a la matrix"{
+	neo.setTieneCredito(true)
+	assert.notThat(paquete.puedeSerEntregado(neo,matrix))
+}
