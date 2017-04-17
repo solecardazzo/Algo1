@@ -1,6 +1,12 @@
 object empresa {
 	var mensajeros=[]
 	
+	method mensajeros(){
+		return mensajeros
+	}
+	method tieneMensajeroA(mensajero){
+		return mensajeros.contains(mensajero)
+	}
 	method contratarUnMensajero(mensajero){
 		mensajeros.add(mensajero)
 	}

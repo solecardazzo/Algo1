@@ -1,5 +1,5 @@
 object paquete {
-	var estaPago
+	var estaPago=false
 
 	method puedeSerEntregado(mensajero, destino) {
 		return destino.puedeSerAccedidoPor(mensajero) and estaPago

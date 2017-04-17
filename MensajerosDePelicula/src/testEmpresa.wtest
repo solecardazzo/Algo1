@@ -1,0 +1,54 @@
+import empresa.*
+import destinos.*
+import mensajeros.*
+import paquete.*
+import transportes.*
+
+test "Al inicio mensajeros esta vacio" {
+	assert.that(empresa.mensajeros().isEmpty())
+}
+test "Contrato a Neo como mensajero" {
+	empresa.contratarUnMensajero(neo)
+	assert.that(empresa.tieneMensajeroA(neo))
+}
+test "Despido a Neo como mensajero" {
+	empresa.despedirUnMensajer(neo)
+	assert.notThat(empresa.tieneMensajeroA(neo))
+}
+test "Despido a todos los mensajeros" {
+	empresa.despedirTodosLosMensajeros()
+	assert.that(empresa.mensajeros().isEmpty())
+}
+test "La empresa es grande ya que es mayor que 2 la cantidad de mensajeros" {
+	empresa.contratarUnMensajero(neo)
+	empresa.contratarUnMensajero(chuck)
+	empresa.contratarUnMensajero(roberto)
+	assert.that(empresa.esGrande())
+}
+test "La empresa No es grande ya que la cantidad de mensajeros es igual que 2" {
+	empresa.contratarUnMensajero(neo)
+	empresa.contratarUnMensajero(chuck)
+	assert.notThat(empresa.esGrande())
+}
+test "La empresa No es grande ya que la cantidad de mensajeros es menor que 2" {
+	empresa.contratarUnMensajero(neo)
+	assert.notThat(empresa.esGrande())
+}
+test "El primer empleado es neo y este puede entregar el paquete a traves del puente de Brooklin" {
+	paquete.setEstaPago(true)
+	empresa.contratarUnMensajero(neo)
+	empresa.contratarUnMensajero(chuck)
+	assert.that(empresa.puedeSerEntregadoPorElPrimerEmpleado(paquete,puenteDeBrooklin))
+}
+test "El primer empleado es neo y este No puede entregar el paquete a traves de la matrix" {
+	paquete.setEstaPago(true)
+	empresa.contratarUnMensajero(neo)
+	empresa.contratarUnMensajero(chuck)
+	assert.notThat(empresa.puedeSerEntregadoPorElPrimerEmpleado(paquete,matrix))
+}
+test "El peso del ultimo empleado que es Chuck es 900" {
+	empresa.contratarUnMensajero(neo)
+	empresa.contratarUnMensajero(chuck)
+	assert.equals(empresa.pesoDelUltimoEmpleado(),900)
+}
+
