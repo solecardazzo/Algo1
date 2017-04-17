@@ -1,5 +1,5 @@
 // Gestionar los detalles de un juego
-// Se modelan ciertos musicos que que interactuarán posteriormente con los personajes creados por los usuarios.
+// Se modelan ciertos musicos que interactuarán posteriormente con los personajes creados por los usuarios.
 object jimiHendrix {
 	var canto=70
 	var guitarra=90
@@ -8,98 +8,98 @@ object jimiHendrix {
 	var piano=0
 	var composicion=80
 	var carisma=60
-	var descontrol=0
-	var maximaHabilidad=100
 	var minimaHabilidad=0
+	var maximaHabilidad=100
+	var descontrol=0
 	var maximoDescontrol=10
- 	var umbralDeCorte=5
-	
+ 	var umbralDeDescontrol=5
+
 	method tocaConOtroMusico(unMusico){
-		return (self.darValorCanto()==0 && self.valorMayor(unMusico.darValorCanto(),self.darValorCanto()))
-		or (self.darValorGuitarra()==0 && self.valorMayor(unMusico.darValorGuitarra(),self.darValorGuitarra()))
-		or (self.darValorBateria()==0 && self.valorMayor(unMusico.darValorBateria(),self.darValorBateria())) 
-		or (self.darValorBajo()==0 && self.valorMayor(unMusico.darValorBajo(),self.darValorBajo())) 
-		or (self.darValorPiano()==0 && self.valorMayor(unMusico.darValorPiano(),self.darValorPiano())) 
-		or (self.darValorComposicion()==0 && self.valorMayor(unMusico.darValorComposicion(),self.darValorComposicion()))
-		or (self.darValorCarisma()==0 && self.valorMayor(unMusico.darValorCarisma(),self.darValorCarisma()))
-		or self.darValorDescontrol()==10
+		return (self.getCanto()==0 && unMusico.getCanto() > self.getCanto())
+		or (self.getGuitarra()==0 && unMusico.getGuitarra() > self.getGuitarra())
+		or (self.getBateria()==0 && unMusico.getBateria() > self.getBateria()) 
+		or (self.getBajo()==0 && unMusico.getBajo() > self.getBajo()) 
+		or (self.getPiano()==0 && unMusico.getPiano() > self.getPiano()) 
+		or (self.getComposicion()==0 && unMusico.getComposicion() > self.getComposicion())
+		or (self.getCarisma()==0 && unMusico.getCarisma() > self.getCarisma())
+		or self.getDescontrol()==10
 	}
-	method valorMayor(valor1,valor2){
-		return valor1>valor2
+	method getCanto(){
+		return canto 
 	}
-	method valorMenor(valor1,valor2){
-		return valor1<valor2
-	}
-	method valorMayorIgual(valor1,valor2){
-		return valor1>=valor2
-	}
- 	method descontrol(){	
- 		if (descontrol<=maximoDescontrol)	
- 		descontrol=descontrol+1
-	}
-	method gestionarDescontrol(unaHabilidad){
-		if (self.valorMayorIgual(descontrol,maximoDescontrol))
-		return self.cambiarCanto(0)
-		else if (self.valorMayorIgual(descontrol,umbralDeCorte) && self.valorMenor(descontrol,maximoDescontrol))
-		return self.cambiarCanto(unaHabilidad+(descontrol-4)*umbralDeCorte)
-		else
-		return unaHabilidad
-	}
-	
-	method cambiarCanto(unValor){
-		canto=unValor
-		if (self.valorMayorIgual(canto,maximaHabilidad)) canto=maximaHabilidad
-	}
-	method cambiarGuitarra(unValor){
-		guitarra=unValor
-		if (self.valorMayorIgual(guitarra,maximaHabilidad)) guitarra=maximaHabilidad
-	}
-	method cambiarBateria(unValor){
-		bateria=unValor		
-		if (self.valorMayorIgual(bateria,maximaHabilidad)) bateria=maximaHabilidad
-	}
-	method cambiarBajo(unValor){
-		bajo=unValor
-		if (self.valorMayorIgual(bajo,maximaHabilidad))	bajo=maximaHabilidad	
-	}
-	method cambiarPiano(unValor){
-		piano=unValor	
-		if (self.valorMayorIgual(piano,maximaHabilidad)) piano=maximaHabilidad
-	}
-	method cambiarComposicion(unValor){
-		composicion=unValor
-		if (self.valorMayorIgual(composicion,maximaHabilidad)) composicion=maximaHabilidad
-	}
-	method cambiarCarisma(unValor){
-		carisma=unValor	
-		if (self.valorMayorIgual(carisma,maximaHabilidad)) carisma=maximaHabilidad
-	}
-	method darValorCanto(){
-		if (self.valorMayorIgual(descontrol,maximoDescontrol))
-		return canto=0
-		else if (self.valorMayorIgual(descontrol,umbralDeCorte) && self.valorMenor(descontrol,maximoDescontrol))
-		return self.cambiarCanto(canto+(descontrol-4)*umbralDeCorte)
-		else
-		return canto	 
-	}
-	method darValorGuitarra(){
+	method getGuitarra(){
 		return guitarra 
 	}
-	method darValorBateria(){
+	method getBateria(){
 		return bateria 
 	}
-	method darValorBajo(){
+	method getBajo(){
 		return bajo 
 	}
-	method darValorPiano(){
+	method getPiano(){
 		return piano 
 	}
-	method darValorComposicion(){
+	method getComposicion(){
 		return composicion 
 	}
-	method darValorCarisma(){
+	method getCarisma(){
 		return carisma 
 	}
+	method getDescontrol(){
+		return descontrol
+	}	
+	method descontrol(){
+		if (descontrol<=maximoDescontrol)		
+ 		descontrol ++
+		if (descontrol==maximoDescontrol){
+			self.setCanto(minimaHabilidad)
+			self.setGuitarra(minimaHabilidad)
+			self.setBateria(minimaHabilidad)
+			self.setBajo(minimaHabilidad)
+			self.setPiano(minimaHabilidad)			
+			self.setComposicion(minimaHabilidad)
+			self.setCarisma(minimaHabilidad)
+		} 
+		if (descontrol>=umbralDeDescontrol && descontrol<maximaHabilidad){
+			var auxiliar=(descontrol-descontrol+1)*umbralDeDescontrol
+			self.setCanto(canto+auxiliar)
+			self.setGuitarra(guitarra+auxiliar)
+			self.setBateria(bateria+auxiliar)
+			self.setBajo(bajo+auxiliar)
+			self.setPiano(piano+auxiliar)
+			self.setComposicion(composicion+auxiliar)
+			self.setCarisma(carisma+auxiliar)
+		}
+	}	
+	method setCanto(unValor){
+		canto=unValor
+		if (canto > maximaHabilidad) canto=maximaHabilidad
+	}
+	method setGuitarra(unValor){
+		guitarra=unValor
+		if (guitarra > maximaHabilidad) guitarra=maximaHabilidad
+	}
+	method setBateria(unValor){
+		bateria=unValor		
+		if (bateria > maximaHabilidad) bateria=maximaHabilidad
+	}
+	method setBajo(unValor){
+		bajo=unValor
+		if (bajo > maximaHabilidad)	bajo=maximaHabilidad	
+	}
+	method setPiano(unValor){
+		piano=unValor	
+		if (piano > maximaHabilidad) piano=maximaHabilidad
+	}
+	method setComposicion(unValor){
+		composicion=unValor
+		if (composicion > maximaHabilidad) composicion=maximaHabilidad
+	}
+	method setCarisma(unValor){
+		carisma=unValor	
+		if (carisma > maximaHabilidad) carisma=maximaHabilidad
+	}
+	
 }
 
 object johnLennon {
@@ -123,38 +123,38 @@ object johnLennon {
 		return yokoNoEstaCerca
 	}
 	method promedioDeHabilidades(unMusico){
-		if (unMusico.darValorCanto()!=0) self.sumaHabilidades(unMusico.darValorCanto())		
-		if (unMusico.darValorGuitarra()!=0) self.sumaHabilidades(unMusico.darValorGuitarra())
-		if (unMusico.darValorBateria()!=0) self.sumaHabilidades(unMusico.darValorBateria())
-		if (unMusico.darValorBajo()!=0) self.sumaHabilidades(unMusico.darValorBajo())
-		if (unMusico.darValorPiano()!=0) self.sumaHabilidades(unMusico.darValorPiano())
-		if (unMusico.darValorComposicion()!=0) self.sumaHabilidades(unMusico.darValorComposicion())		
-		if (unMusico.darValorCarisma()!=0) self.sumaHabilidades(unMusico.darValorCarisma())
+		if (unMusico.getCanto()!=0) self.sumaHabilidades(unMusico.getCanto())		
+		if (unMusico.getGuitarra()!=0) self.sumaHabilidades(unMusico.getGuitarra())
+		if (unMusico.getBateria()!=0) self.sumaHabilidades(unMusico.getBateria())
+		if (unMusico.getBajo()!=0) self.sumaHabilidades(unMusico.getBajo())
+		if (unMusico.getPiano()!=0) self.sumaHabilidades(unMusico.getPiano())
+		if (unMusico.getComposicion()!=0) self.sumaHabilidades(unMusico.getComposicion())		
+		if (unMusico.getCarisma()!=0) self.sumaHabilidades(unMusico.getCarisma())
 		return sumaHabilidades/cantidadHabilidades
 	}
 	method sumaHabilidades(unvalor){
 		sumaHabilidades=sumaHabilidades+unvalor
 		cantidadHabilidades=cantidadHabilidades+1
 	}
-	method darValorCanto(){
+	method getCanto(){
 		if (!yokoNoEstaCerca) return canto-canto*valorADisminuir else return canto 
 	}
-	method darValorGuitarra(){
+	method getGuitarra(){
 		if (!yokoNoEstaCerca) return guitarra-guitarra*valorADisminuir else return guitarra 
 	}
-	method darValorBateria(){
+	method getBateria(){
 		if (!yokoNoEstaCerca) return bateria-bateria*valorADisminuir else return bateria 
 	}
-	method darValorBajo(){
+	method getBajo(){
 		if (!yokoNoEstaCerca) return bajo-bajo*valorADisminuir else return bajo 
 	}
-	method darValorPiano(){
+	method getPiano(){
 		if (!yokoNoEstaCerca) return piano-piano*valorADisminuir else return piano 
 	}
-	method darValorComposicion(){
+	method getComposicion(){
 		if (!yokoNoEstaCerca) return composicion-composicion*0.2 else return composicion 
 	}
-	method darValorCarisma(){
+	method getCarisma(){
 		if (!yokoNoEstaCerca) return carisma-carisma*valorADisminuir else return carisma 
 	}
 }
@@ -169,27 +169,27 @@ object paulMcCartney {
 	var carisma=60
 	
 	method tocaConOtroMusico(unMusico){
-		return unMusico.darValorCanto()>self.darValorCanto() || unMusico.darValorGuitarra()>self.darValorGuitarra() ||	unMusico.darValorBateria()>self.darValorBateria() || unMusico.darValorBajo()>self.darValorBajo() ||	unMusico.darValorPiano()>self.darValorPiano() || unMusico.darValorComposicion()>self.darValorComposicion() || unMusico.darValorCarisma()>self.darValorCarisma()
+		return unMusico.getCanto()>self.getCanto() || unMusico.getGuitarra()>self.getGuitarra() ||	unMusico.getBateria()>self.getBateria() || unMusico.getBajo()>self.getBajo() ||	unMusico.getPiano()>self.getPiano() || unMusico.getComposicion()>self.getComposicion() || unMusico.getCarisma()>self.getCarisma()
 	}	
-	method darValorCanto(){
+	method getCanto(){
 		return canto 
 	}
-	method darValorGuitarra(){
+	method getGuitarra(){
 		return guitarra 
 	}
-	method darValorBateria(){
+	method getBateria(){
 		return bateria 
 	}
-	method darValorBajo(){
+	method getBajo(){
 		return bajo 
 	}
-	method darValorPiano(){
+	method getPiano(){
 		return piano 
 	}
-	method darValorComposicion(){
+	method getComposicion(){
 		return composicion 
 	}
-	method darValorCarisma(){
+	method getCarisma(){
 		return carisma 
 	}
 }
@@ -212,25 +212,25 @@ object charlyGarcia {
 	method nivelDeHumor(){
 		return minimoAleatorio.randomUpTo(maximoAleatorio)
 	}
-	method darValorCanto(){
+	method getCanto(){
 		return canto*self.nivelDeHumor() 
 	}
-	method darValorGuitarra(){
+	method getGuitarra(){
 		return guitarra*self.nivelDeHumor()  
 	}
-	method darValorBateria(){
+	method getBateria(){
 		return bateria*self.nivelDeHumor()  
 	}
-	method darValorBajo(){
+	method getBajo(){
 		return bajo*self.nivelDeHumor()  
 	}
-	method darValorPiano(){
+	method getPiano(){
 		return piano*self.nivelDeHumor()  
 	}
-	method darValorComposicion(){
+	method getComposicion(){
 		return composicion*self.nivelDeHumor()  
 	}
-	method darValorCarisma(){
+	method getCarisma(){
 		return carisma*self.nivelDeHumor()  
 	}
 }
