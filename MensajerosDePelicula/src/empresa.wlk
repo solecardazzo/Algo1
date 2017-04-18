@@ -25,4 +25,17 @@ object empresa {
 	method pesoDelUltimoEmpleado(){
 		return mensajeros.last().pesoTotal()
 	}
+	method puedeSerEntregadoPorLaEmpresa(paquete,destino){
+		return mensajeros.find({mens => paquete.puedeSerEntregado(mens,destino)})
+	}
+	method elPaqueteEsFacil(paquete,destino){
+		return mensajeros.any({mens => paquete.puedeSerEntregado(mens,destino)})
+	}
+	method candidatosParaEnviarPaquete(paquete,destino){
+		return mensajeros.filter({mens => paquete.puedeSerEntregado(mens,destino)})
+	}
+	method tieneSobrePeso(paquete,destino){
+		return (mensajeros.sum({mens => mens.pesoTotal()})/mensajeros.size())>500
+	}
+	//Falta el punto 5 :/
 }
