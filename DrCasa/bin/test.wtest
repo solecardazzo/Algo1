@@ -18,3 +18,13 @@ test "Logan contrae lupus ademas de malaria" {
 	persona.logan().seEnferma(enfermedades.lupus())
 	assert.that(persona.logan().tieneLaEnfermedad(enfermedades.lupus()))
 }
+test "Logan vive dos dias, un dia con malaria y el otro con malaria y lupus" {
+	persona.logan().seEnferma(enfermedades.malaria())
+	persona.logan().cadaDiaQueVive()
+	persona.logan().seEnferma(enfermedades.lupus())
+	persona.logan().cadaDiaQueVive()
+	//46.2 de temperatura y 
+	assert.equals(46.2, persona.logan().temperatura())
+}
+
+

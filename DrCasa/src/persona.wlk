@@ -2,9 +2,11 @@
 class Persona {
 	var enfermedades=[]
 	var temperatura
+	var celulas
 	
-	constructor(_temperatura){
+	constructor(_temperatura, _celulas){
 		temperatura = _temperatura
+		celulas=_celulas
 	}
 	
 	method seEnferma(_enfermedad){ enfermedades.add(_enfermedad)}
