@@ -1,0 +1,10 @@
+import fixture.*
+
+test "La malaria se reproduce duplicando la cantidad de células amenazadas" {
+	enfermedades.malaria().reproducirseAsiMismas()
+	assert.equals(10000, enfermedades.malaria().celulasAmenazadas())
+}
+test "Logan contrae malaria" {
+	persona.logan().seEnferma(enfermedades.malaria())
+	assert.that(persona.logan().queEnfermedadTiene(enfermedades.malaria()))
+}
