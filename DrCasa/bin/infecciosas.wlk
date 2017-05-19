@@ -7,7 +7,7 @@ class Infecciosas inherits Enfermedades{
 	method efectoQueProvoca(_persona){
 		_persona.temperatura(_persona.temperatura() + celulasAmenazadas / 1000) 
 	}
-	method reproducirseAsiMismas(){
-		celulasAmenazadas = celulasAmenazadas * 2
+	method reproducirseAsiMismas(_persona){
+		_persona.celulas(_persona.celulas() + celulasAmenazadas * 2)
 	}
 }

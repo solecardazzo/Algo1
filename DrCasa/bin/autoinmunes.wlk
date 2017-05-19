@@ -5,6 +5,6 @@ class Autoinmunes inherits Enfermedades{
 	constructor(_celulasAmenazadas) = super(_celulasAmenazadas)
 	
 	method efectoQueProvoca(_persona){
-		celulasAmenazadas = 0
+		_persona.celulas(_persona.celulas() - celulasAmenazadas)
 	}	
 }

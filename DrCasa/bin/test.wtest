@@ -1,8 +1,8 @@
 import fixture.*
 
 test "La malaria se reproduce duplicando la cantidad de células amenazadas" {
-	enfermedades.malaria().reproducirseAsiMismas()
-	assert.equals(10000, enfermedades.malaria().celulasAmenazadas())
+	enfermedades.malaria().reproducirseAsiMismas(persona.logan())
+	assert.equals(1010000, persona.logan().celulas())
 }
 test "Logan contrae malaria" {
 	persona.logan().seEnferma(enfermedades.malaria())

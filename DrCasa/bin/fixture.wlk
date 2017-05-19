@@ -11,7 +11,7 @@ object enfermedades{
 	method lupus() = lupus
 }
 object persona{
-	var logan = new Persona(36.2)
+	var logan = new Persona(36.2, 1000000)
 	
 	method logan() = logan
 }

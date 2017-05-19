@@ -22,5 +22,7 @@ class Persona {
 	}
 	method temperatura() = temperatura
 	method temperatura(_temperatura) {temperatura = _temperatura}
+	method celulas() = celulas
+	method celulas(_celulas) {celulas = _celulas}
 
 }
